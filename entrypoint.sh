@@ -25,7 +25,7 @@ repo = event["repository"]["full_name"]
 if ENV.fetch("GITHUB_EVENT_NAME") == "pull_request"
   pr_number = event["number"]
 else
-  pulls = github.pull_requests(repo, {"state" => "closed", })
+  pulls = github.pull_requests(repo)
   push_head = event["after"]
   pr = pulls.find { |pr| pr["head"]["sha"] == push_head }
 
