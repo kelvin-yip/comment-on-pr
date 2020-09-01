@@ -5,7 +5,7 @@ require "octokit"
 
 json = File.read(ENV.fetch("GITHUB_EVENT_PATH"))
 event = JSON.parse(json)
-
+puts json
 github = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
 
 if !ENV["GITHUB_TOKEN"]
@@ -25,10 +25,7 @@ repo = event["repository"]["full_name"]
 if ENV.fetch("GITHUB_EVENT_NAME") == "pull_request"
   pr_number = event["number"]
 else
-  pulls = github.pull_requests(repo, state: "closed")
-  pulls.each do |obj|
-    puts obj
-  end
+  pulls = github.pull_requests(repo, {"state" => "closed", })
   push_head = event["after"]
   pr = pulls.find { |pr| pr["head"]["sha"] == push_head }
 
