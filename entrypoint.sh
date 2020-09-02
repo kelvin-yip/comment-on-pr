@@ -26,7 +26,7 @@ if ENV.fetch("GITHUB_EVENT_NAME") == "pull_request"
   pr_number = event["number"]
 else
   pr_number = event["head_commit"]["message"].match("(?<=#).+?(?= )")
-  puts "commmit message: ${event["head_commit"]["message"]}"
+  puts event["head_commit"]["message"]
 end
 
 coms = github.issue_comments(repo, pr_number)
